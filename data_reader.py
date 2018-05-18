@@ -15,6 +15,7 @@ class DataReader:
     def read(root_path: str):
         X, y = DataReader.read_gender(f"{root_path}/male", "male")
         X1, y1 = DataReader.read_gender(f"{root_path}/female", "female")
+        X, y = X[:len(X1)], y[:len(y1)]
         X.extend(X1), y.extend(y1)
         col = X[0].shape[0]
         combined = list(zip(X, y))

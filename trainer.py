@@ -28,7 +28,7 @@ pipeline = Pipeline([
     ("clf", SVC())
 ])
 
-grid = GridSearchCV(pipeline, params)
+grid = GridSearchCV(pipeline, params, n_jobs=-1)
 grid.fit(X_train, y_train)
 clf = grid.best_estimator_
 target_names = ["female", "male"]
