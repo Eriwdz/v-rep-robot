@@ -32,7 +32,6 @@ grid = GridSearchCV(pipeline, params)
 grid.fit(X_train, y_train)
 clf = grid.best_estimator_
 target_names = ["female", "male"]
-y_pred = clf.predict(X_test, y_test)
+y_pred = clf.predict(X_test)
 print(classification_report(y_test, y_pred, target_names=target_names))
-dump(pca, "models/transformer.model")
 dump(clf, "models/classifier.model")
