@@ -1,5 +1,4 @@
 from joblib import dump
-from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split, GridSearchCV
 # Load data
@@ -12,11 +11,6 @@ X, y = DataReader.read("data/preprocessed")
 # split into a training and testing set
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-# Compute a PCA
-n_components = 100
-pca = PCA(n_components=n_components, whiten=True)
-pca.fit(X_train, y_train)
-
 params = {
     'clf__C': [1, 10, 100, 1000],
     'clf__gamma': [0.001, 0.0001],
@@ -24,10 +18,10 @@ params = {
 }
 
 pipeline = Pipeline([
-    ("pca", pca),
     ("clf", SVC())
 ])
 
+print("Start Training")
 grid = GridSearchCV(pipeline, params, n_jobs=-1)
 grid.fit(X_train, y_train)
 clf = grid.best_estimator_

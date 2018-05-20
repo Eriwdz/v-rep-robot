@@ -5,7 +5,6 @@ import random
 import cv2
 import dlib
 import numpy as np
-from imutils import resize
 
 
 class DataReader:
@@ -40,7 +39,7 @@ class DataReader:
         rects = DataReader.detector(image, 2)
         rect = rects[0]
         image = image[rect.top():rect.bottom(), rect.left():rect.right()]
-        image = resize(image, 30, 30)
+        image = cv2.resize(image, (30, 30), interpolation=cv2.INTER_CUBIC)
         cv2.imwrite("test.jpg", image)
         image = image.reshape(1, -1)
         return image
