@@ -14,7 +14,6 @@ class Sensors:
 
     def read(self):
         x = [self.read_from_sensor(sensor) for sensor in self.sensors]
-        print(x)
         return min(x)
 
     def read_from_sensor(self, sensor):

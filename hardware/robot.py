@@ -36,9 +36,9 @@ class Robot:
             print(f"left:{left}")
             print(f"right:{right}")
             values = {
-                "front": front,
-                "left": left,
-                "right": right
+                "front": front * 10,
+                "left": left * 10,
+                "right": right * 10
             }
             v, theta = self.fuzzy_system.run(values)
             w = theta * self.time_step
