@@ -18,13 +18,16 @@ class Robot:
                                                              simx_opmode_oneshot_wait)
         _, self.right_motor_handle = vrep.simxGetObjectHandle(clientID, 'Pioneer_p3dx_rightMotor',
                                                               simx_opmode_oneshot_wait)
-        self.front_sensors = Sensors(["Pioneer_p3dx_ultrasonicSensor8", "Pioneer_p3dx_ultrasonicSensor9"], clientID)
+        self.front_sensors = Sensors(["Pioneer_p3dx_ultrasonicSensor8", "Pioneer_p3dx_ultrasonicSensor9"], clientID,
+                                     self.fuzzy_system.max_distance)
         self.left_sensors = Sensors(
             ["Pioneer_p3dx_ultrasonicSensor5", "Pioneer_p3dx_ultrasonicSensor6", "Pioneer_p3dx_ultrasonicSensor7"],
-            clientID)
+            clientID,
+            self.fuzzy_system.max_distance)
         self.right_sensors = Sensors(
             ["Pioneer_p3dx_ultrasonicSensor10", "Pioneer_p3dx_ultrasonicSensor11", "Pioneer_p3dx_ultrasonicSensor12"],
-            clientID)
+            clientID,
+            self.fuzzy_system.max_distance)
 
     def run(self):
         t = time.time()
@@ -36,12 +39,18 @@ class Robot:
             print(f"left:{left}")
             print(f"right:{right}")
             values = {
-                "front": front * 10,
-                "left": left * 10,
-                "right": right * 10
+                "front": front * 100,
+                "left": left * 100,
+                "right": right * 100
             }
             v, theta = self.fuzzy_system.run(values)
-            w = theta * self.time_step
-            vrep.simxSetJointTargetVelocity(self.clientID, self.left_motor_handle, v, simx_opmode_streaming)
-            vrep.simxSetJointTargetVelocity(self.clientID, self.right_motor_handle, w, simx_opmode_streaming)
+            theta = math.radians(theta)
+            v /= 10
+            w = theta / self.time_step
+            print(f"v:{v}")
+            print(f"theta:{theta}")
+            vl = 5
+            vr = 6
+            vrep.simxSetJointTargetVelocity(self.clientID, self.left_motor_handle, vl, simx_opmode_streaming)
+            vrep.simxSetJointTargetVelocity(self.clientID, self.right_motor_handle, vr, simx_opmode_streaming)
             time.sleep(0.2)

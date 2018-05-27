@@ -10,6 +10,7 @@ from fuzzy_system.fuzzy_system import FuzzySystem
 class SimpleFuzzySystem(FuzzySystem):
 
     def __init__(self, step=0.01):
+        self.max_distance = 70
         self.step = step
         self.input_front, self.input_left, self.input_right, self.input_velocity = self.build_inputs()
         self.output_velocity, self.output_angle = self.build_outputs()
@@ -18,6 +19,9 @@ class SimpleFuzzySystem(FuzzySystem):
     def run(self, values: dict):
         try:
             values = {f"input_{k}": v for k, v in values.items() if k != "velocity"}
+            values["input_front"] = max(0, min(70, values["input_front"]))
+            values["input_right"] = max(0, min(70, values["input_right"]))
+            values["input_left"] = max(0, min(70, values["input_left"]))
             controller = ctrl.ControlSystem(self.rules)
             controller = ctrl.ControlSystemSimulation(controller)
             controller.inputs(values)
