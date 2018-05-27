@@ -20,11 +20,11 @@ class Robot:
                                                               simx_opmode_oneshot_wait)
         self.front_sensors = Sensors(["Pioneer_p3dx_ultrasonicSensor8", "Pioneer_p3dx_ultrasonicSensor9"], clientID)
         self.left_sensors = Sensors(
-            ["Pioneer_p3dx_ultrasonicSensor4", "Pioneer_p3dx_ultrasonicSensor5", "Pioneer_p3dx_ultrasonicSensor6",
-             "Pioneer_p3dx_ultrasonicSensor7"], clientID)
+            ["Pioneer_p3dx_ultrasonicSensor5", "Pioneer_p3dx_ultrasonicSensor6", "Pioneer_p3dx_ultrasonicSensor7"],
+            clientID)
         self.right_sensors = Sensors(
-            ["Pioneer_p3dx_ultrasonicSensor10", "Pioneer_p3dx_ultrasonicSensor11", "Pioneer_p3dx_ultrasonicSensor12",
-             "Pioneer_p3dx_ultrasonicSensor13"], clientID)
+            ["Pioneer_p3dx_ultrasonicSensor10", "Pioneer_p3dx_ultrasonicSensor11", "Pioneer_p3dx_ultrasonicSensor12"],
+            clientID)
 
     def run(self):
         t = time.time()
