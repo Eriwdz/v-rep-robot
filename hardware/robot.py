@@ -11,9 +11,9 @@ PI = math.pi
 
 class Robot:
     def __init__(self, clientID):
+        self.clientID = clientID
         self.time_step = 0.2
         self.fuzzy_system = SimpleFuzzySystem()
-        self.clientID = clientID
         _, self.left_motor_handle = vrep.simxGetObjectHandle(clientID, 'Pioneer_p3dx_leftMotor',
                                                              simx_opmode_oneshot_wait)
         _, self.right_motor_handle = vrep.simxGetObjectHandle(clientID, 'Pioneer_p3dx_rightMotor',
@@ -32,9 +32,9 @@ class Robot:
             front = self.front_sensors.read()
             left = self.left_sensors.read()
             right = self.right_sensors.read()
-            print(front)
-            print(left)
-            print(right)
+            print(f"front:{front}")
+            print(f"left:{left}")
+            print(f"right:{right}")
             values = {
                 "front": front,
                 "left": left,

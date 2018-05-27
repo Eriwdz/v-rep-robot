@@ -1,7 +1,7 @@
 import numpy as np
 
 from v_rep import vrep
-from v_rep.vrepConst import simx_opmode_buffer, simx_opmode_oneshot_wait
+from v_rep.vrepConst import simx_opmode_buffer, simx_opmode_oneshot_wait, simx_opmode_blocking
 
 
 class Sensors:
@@ -9,13 +9,13 @@ class Sensors:
         self.clientID = clientID
         self.sensors = []
         for name in sensors:
-            _, sensor_handle = vrep.simxGetObjectHandle(clientID, name, simx_opmode_oneshot_wait)
+            _, sensor_handle = vrep.simxGetObjectHandle(clientID, name, simx_opmode_blocking)
             self.sensors.append(sensor_handle)
 
     def read(self):
         return min([self.read_from_sensor(sensor) for sensor in self.sensors])
 
     def read_from_sensor(self, sensor):
-        _, _, detectedPoint, _, _ = vrep.simxReadProximitySensor(self.clientID, sensor,
-                                                                 simx_opmode_buffer)
+        error, _, detectedPoint, _, _ = vrep.simxReadProximitySensor(self.clientID, sensor,
+                                                                     simx_opmode_blocking)
         return np.linalg.norm(detectedPoint)
