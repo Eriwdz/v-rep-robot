@@ -39,9 +39,9 @@ class MooSystem:
             right = self.r.right_length()
 
             # Map Values
-            front = min(max(front, 0), 4)
-            left = min(max(left, 0), 4)
-            right = min(max(right, 0), 4)
+            front = min(max(front, 0.), 3.98)
+            left = min(max(left, 0.), 3.98)
+            right = min(max(right, 0.), 3.98)
 
             alpha = self._get_alpha(self.r_destination, self.pos)
             p_current = self._distance(self.r_destination, self.pos)
@@ -55,18 +55,27 @@ class MooSystem:
                 "p": p,
                 "ed": ed
             }
-            print(values)
+            print(f"values: {values}")
             u, w = self.fuzzy_system.run(values)
 
-            if w is not None and w != 0 and abs(w) > 25:
+            if w is not None and w != 0:  # and abs(w) > 25:
                 print('LR angle')
+                # temp = degrees(w)
+                # self.r.stop_motors()
                 if w > 0:
                     self.r.rotate_left()
                 elif w < 0:
                     self.r.rotate_right()
-                continue
+                time.sleep(abs(w) / 12.5)
+
+                # continue
             if u is not None and u != 0:
+                # self.r.stop_motors()
                 self.r.move_forward()
-            self.r.stop_motors()
-            time.sleep(0.2)
+            time.sleep(u / 12.5)
+
             self.pos = self.r.get_position()
+            # print(f"pos: {self.pos}")
+
+        if self._distance(self.r_destination, self.pos) <= self.goal_threshold:
+            print("GOAL REACHED!")

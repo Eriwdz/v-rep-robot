@@ -6,9 +6,10 @@ from fuzzy_system.moo_fuzzy_controller import MooFuzzyController
 class ObstacleAvoidanceController(MooFuzzyController):
 
     def validate(self, values):
-        t = 1.5
+        t = 4
         temp = super().validate(values)
         temp2 = (values["input_dl"] <= t or values["input_df"] <= t or values["input_dr"] <= t)
+        print(temp2)
         return temp and temp2
 
     def inputs(self, dl, df, dr, a, p, ed):

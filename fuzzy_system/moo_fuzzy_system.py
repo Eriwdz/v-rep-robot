@@ -36,7 +36,9 @@ class MooFuzzySystem(FuzzySystem):
 
         self.moo_solver.set_variables(u1, u2, u3, w1, w2, w3, inf11, inf12, inf21, inf22, inf31, inf32)
         self.lex_solver.set_variables(u1, u2, u3, w1, w2, w3, inf11, inf12, inf21, inf22, inf31, inf32)
-        return self.lex_solver.solve() if self.use_lex else self.moo_solver.solve()
+        result = self.lex_solver.solve() if self.use_lex else self.moo_solver.solve()
+        print(result)
+        return result
 
     def build_inputs(self):
         input_dl = ctrl.Antecedent(np.arange(0, 4, self.step), "input_dl")  # meters

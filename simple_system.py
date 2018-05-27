@@ -1,4 +1,5 @@
 import time
+from math import radians
 
 from fuzzy_system.simple_fuzzy_system import SimpleFuzzySystem
 from hardware.robot import Robot
@@ -11,6 +12,8 @@ class SimpleSystem:
 
     def run(self):
         velocity = 0
+        r = 0.020
+        vel = 5.7296e+1
 
         while True:
             # update distance sensors
@@ -31,14 +34,16 @@ class SimpleSystem:
             }
             print(values)
             velocity, angle = self.fuzzy_system.run(values)
-
-            if angle is not None and angle != 0 and abs(angle) > 25:
+            print(f"Velocity: {velocity}, Angle: {angle}")
+            if angle is not None and angle != 0:  # and abs(angle) > 25:
                 print('LR angle')
+                # angle = radians(angle)
                 if angle > 0:
                     self.r.rotate_left()
                 elif angle < 0:
                     self.r.rotate_right()
-                continue
+                time.sleep(0.1)
+                # continue
             if velocity is not None and velocity != 0:
                 self.r.move_forward()
             time.sleep(0.1)
