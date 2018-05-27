@@ -18,14 +18,15 @@ class Robot:
                                                              simx_opmode_oneshot_wait)
         _, self.right_motor_handle = vrep.simxGetObjectHandle(clientID, 'Pioneer_p3dx_rightMotor',
                                                               simx_opmode_oneshot_wait)
-        self.front_sensors = Sensors(["Pioneer_p3dx_ultrasonicSensor8", "Pioneer_p3dx_ultrasonicSensor9"], clientID,
-                                     self.fuzzy_system.max_distance)
+
         self.left_sensors = Sensors(
-            ["Pioneer_p3dx_ultrasonicSensor5", "Pioneer_p3dx_ultrasonicSensor6", "Pioneer_p3dx_ultrasonicSensor7"],
+            ["Pioneer_p3dx_ultrasonicSensor1", "Pioneer_p3dx_ultrasonicSensor2", "Pioneer_p3dx_ultrasonicSensor3"],
             clientID,
             self.fuzzy_system.max_distance)
+        self.front_sensors = Sensors(["Pioneer_p3dx_ultrasonicSensor4", "Pioneer_p3dx_ultrasonicSensor5"], clientID,
+                                     self.fuzzy_system.max_distance)
         self.right_sensors = Sensors(
-            ["Pioneer_p3dx_ultrasonicSensor10", "Pioneer_p3dx_ultrasonicSensor11", "Pioneer_p3dx_ultrasonicSensor12"],
+            ["Pioneer_p3dx_ultrasonicSensor6", "Pioneer_p3dx_ultrasonicSensor7", "Pioneer_p3dx_ultrasonicSensor8"],
             clientID,
             self.fuzzy_system.max_distance)
         _, self.robot_handle = vrep.simxGetObjectHandle(self.clientID, "Pioneer_p3dx", simx_opmode_blocking)
@@ -44,25 +45,25 @@ class Robot:
     def run(self):
         t = time.time()
         while (time.time() - t) < 60:
-            pos, orient = self.getPosOrient()
-            print(pos)
-            print(math.degrees(orient[2]))
+            # pos, orient = self.getPosOrient()
+            # print(pos)
+            # print(math.degrees(orient[2]))
             front = self.front_sensors.read()
             left = self.left_sensors.read()
             right = self.right_sensors.read()
             print(f"front:{front}")
             print(f"left:{left}")
             print(f"right:{right}")
-            values = {
-                "front": front * 100,
-                "left": left * 100,
-                "right": right * 100
-            }
-            v, theta = self.fuzzy_system.run(values)
-            theta = math.radians(theta)
-            v /= 10
-            w = theta / self.time_step
-            print(f"v:{v}")
-            print(f"theta:{theta}")
-            self.move(v, w)
+            # values = {
+            #     "front": front * 100,
+            #     "left": left * 100,
+            #     "right": right * 100
+            # }
+            # v, theta = self.fuzzy_system.run(values)
+            # theta = math.radians(theta)
+            # v /= 10
+            # w = theta / self.time_step
+            # print(f"v:{v}")
+            # print(f"theta:{theta}")
+            # self.move(v, w)
             time.sleep(0.2)
