@@ -29,6 +29,12 @@ class Robot:
             clientID,
             self.fuzzy_system.max_distance)
 
+    def move(self, v, w):
+        vl = 5
+        vr = 6
+        vrep.simxSetJointTargetVelocity(self.clientID, self.left_motor_handle, vl, simx_opmode_streaming)
+        vrep.simxSetJointTargetVelocity(self.clientID, self.right_motor_handle, vr, simx_opmode_streaming)
+
     def run(self):
         t = time.time()
         while (time.time() - t) < 60:
@@ -49,8 +55,5 @@ class Robot:
             w = theta / self.time_step
             print(f"v:{v}")
             print(f"theta:{theta}")
-            vl = 5
-            vr = 6
-            vrep.simxSetJointTargetVelocity(self.clientID, self.left_motor_handle, vl, simx_opmode_streaming)
-            vrep.simxSetJointTargetVelocity(self.clientID, self.right_motor_handle, vr, simx_opmode_streaming)
+            self.move(v, w)
             time.sleep(0.2)
