@@ -1,4 +1,4 @@
-import numpy as np
+import math
 
 from v_rep import vrep
 from v_rep.vrepConst import simx_opmode_blocking, simx_opmode_buffer
@@ -21,5 +21,6 @@ class Sensors:
     def read_from_sensor(self, sensor):
         errorCode, detectionState, detectedPoint, detectedObjectHandle, detectedSurfaceNormalVector \
             = vrep.simxReadProximitySensor(self.clientID, sensor, simx_opmode_buffer)
-        temp = np.linalg.norm(detectedPoint)
+        # temp = np.linalg.norm(detectedPoint)
+        temp = math.sqrt(detectedPoint[0] ** 2 + detectedPoint[1] ** 2 + detectedPoint[2] ** 2)
         return self.val_if_not_exist if temp == 0 else temp
