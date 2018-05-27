@@ -1,10 +1,18 @@
-from joblib import load
+import sys
 
-from data_reader import DataReader
+from v_rep import vrep
+from hardware.robot import Robot
+
+vrep.simxFinish(-1)
+
+clientID = vrep.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
+
+if clientID != -1:
+    print('Connected to remote API server')
+
+else:
+    sys.exit('Could not connect')
 
 if __name__ == '__main__':
-    clf = load("models/classifier.model")
-    image_path = "test_images/david-cameron.jpg"
-    image = DataReader.read_image(image_path)
-    predicted = clf.predict(image)
-    print(predicted)
+    robot = Robot(clientID)
+    robot.run()

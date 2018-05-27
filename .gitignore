@@ -1,6 +1,6 @@
-data
+# Created by .ignore support plugin (hsz.mobi)
 .idea
-models
+v_rep/remoteApi.so
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
