@@ -38,7 +38,7 @@ class LexicographicSolver(Solver):
         return self.inf31.defuzz(), self.inf32.defuzz()
 
     def solve(self):
-        print(self.used_components)
+        # print(self.used_components)
 
         temp = sum(self.used_components)
         if temp == 1:

@@ -58,8 +58,8 @@ class MooSystem:
             print(f"values: {values}")
             u, w = self.fuzzy_system.run(values)
 
-            if w is not None and w != 0:  # and abs(w) > 25:
-                print('LR angle')
+            if w is not None:  # and abs(w) > 25:
+                # print('LR angle')
                 # temp = degrees(w)
                 # self.r.stop_motors()
                 if w > 0:
@@ -69,7 +69,7 @@ class MooSystem:
                 time.sleep(abs(w) / 12.5)
 
                 # continue
-            if u is not None and u != 0:
+            if u is not None:
                 # self.r.stop_motors()
                 self.r.move_forward()
             time.sleep(u / 12.5)
@@ -78,4 +78,6 @@ class MooSystem:
             # print(f"pos: {self.pos}")
 
         if self._distance(self.r_destination, self.pos) <= self.goal_threshold:
-            print("GOAL REACHED!")
+            print("************************************************")
+            print("**************** GOAL REACHED! *****************")
+            print("************************************************")
